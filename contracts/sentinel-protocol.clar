@@ -124,3 +124,57 @@
     contract-owner: CONTRACT-OWNER
   })
 )
+
+;; =================================
+;; Public Functions
+;; =================================
+
+(define-public (increment)
+  (begin
+    ;; Validations
+    (asserts! (not (is-paused)) ERR-NOT-AUTHORIZED)
+    (asserts! (< (var-get counter) MAX-COUNTER-VALUE) ERR-COUNTER-OVERFLOW)
+    
+    ;; Update counter
+    (var-set counter (+ (var-get counter) u1))
+    (var-set total-increments (+ (var-get total-increments) u1))
+    
+    ;; Update user stats
+    (update-user-stats "increment")
+    
+    ;; Emit event
+    (print {
+      event: "counter-incremented",
+      counter: (var-get counter),
+      user: tx-sender,
+      block: block-height
+    })
+    
+    (ok (var-get counter))
+  )
+)
+
+(define-public (decrement)
+  (begin
+    ;; Validations
+    (asserts! (not (is-paused)) ERR-NOT-AUTHORIZED)
+    (asserts! (> (var-get counter) MIN-COUNTER-VALUE) ERR-COUNTER-UNDERFLOW)
+    
+    ;; Update counter
+    (var-set counter (- (var-get counter) u1))
+    (var-set total-decrements (+ (var-get total-decrements) u1))
+    
+    ;; Update user stats
+    (update-user-stats "decrement")
+    
+    ;; Emit event
+    (print {
+      event: "counter-decremented",
+      counter: (var-get counter),
+      user: tx-sender,
+      block: block-height
+    })
+    
+    (ok (var-get counter))
+  )
+)
