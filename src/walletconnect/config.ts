@@ -11,6 +11,8 @@ export const walletConnectConfig = {
     url: 'https://sentinel-protocol.com', // Update with your actual URL
     icons: ['https://sentinel-protocol.com/icon.png'], // Update with your actual icon
   },
+  // Deployed contract address
+  contractAddress: 'SP1JWWHAQQ359EBKV4X77KM716AVSFCQ1AH56RVFX.sentinel-protocol',
   // Stacks chain configuration
   chains: {
     stacks: {
