@@ -179,7 +179,7 @@
   )
 )
 
-blic (increment-by (amount uint))
+(define-public (increment-by (amount uint))
   (begin
     ;; Validations
     (asserts! (not (is-paused)) ERR-NOT-AUTHORIZED)
@@ -297,6 +297,23 @@ blic (increment-by (amount uint))
     
     (print {
       event: "contract-paused",
+      user: tx-sender,
+      block: block-height
+    })
+    
+    (ok true)
+  )
+)
+
+(define-public (unpause)
+  (begin
+    (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+    (asserts! (is-paused) ERR-NOT-AUTHORIZED)
+    
+    (var-set paused false)
+    
+    (print {
+      event: "contract-unpaused",
       user: tx-sender,
       block: block-height
     })
