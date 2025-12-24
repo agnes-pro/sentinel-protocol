@@ -86,3 +86,41 @@
 (define-read-only (get-counter)
   (ok (var-get counter))
 )
+
+(define-read-only (get-owner)
+  (ok (var-get owner))
+)
+
+(define-read-only (get-contract-owner)
+  (ok CONTRACT-OWNER)
+)
+
+(define-read-only (is-paused-status)
+  (ok (var-get paused))
+)
+
+(define-read-only (get-total-increments)
+  (ok (var-get total-increments))
+)
+
+(define-read-only (get-total-decrements)
+  (ok (var-get total-decrements))
+)
+
+(define-read-only (get-user-operations (user principal))
+  (ok (default-to 
+    { increments: u0, decrements: u0, last-action-block: u0 }
+    (map-get? user-operations user)
+  ))
+)
+
+(define-read-only (get-contract-info)
+  (ok {
+    counter: (var-get counter),
+    owner: (var-get owner),
+    paused: (var-get paused),
+    total-increments: (var-get total-increments),
+    total-decrements: (var-get total-decrements),
+    contract-owner: CONTRACT-OWNER
+  })
+)
