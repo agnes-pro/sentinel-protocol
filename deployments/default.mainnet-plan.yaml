@@ -11,7 +11,7 @@ plan:
         - contract-publish:
             contract-name: sentinel-protocol
             expected-sender: SP1JWWHAQQ359EBKV4X77KM716AVSFCQ1AH56RVFX
-            cost: 76280
+            cost: 77050
             path: contracts/sentinel-protocol.clar
             anchor-block-only: true
             clarity-version: 4
