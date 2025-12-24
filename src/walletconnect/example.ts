@@ -73,7 +73,7 @@ export async function exampleContractInteraction() {
     jsonrpc: '2.0',
     method: 'stx_callContract',
     params: {
-      contract: 'SP...your-address.sentinel-protocol',
+      contract: 'SP1JWWHAQQ359EBKV4X77KM716AVSFCQ1AH56RVFX.sentinel-protocol',
       functionName: 'your-function-name',
       functionArgs: [],
     },
