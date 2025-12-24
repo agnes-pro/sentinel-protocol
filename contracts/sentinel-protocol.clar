@@ -267,3 +267,40 @@ blic (increment-by (amount uint))
     )
   )
 )
+
+(define-public (transfer-ownership (new-owner principal))
+  (begin
+    (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+    (asserts! (not (is-eq new-owner (var-get owner))) ERR-SAME-OWNER)
+    
+    (let ((old-owner (var-get owner)))
+      (var-set owner new-owner)
+      
+      (print {
+        event: "ownership-transferred",
+        old-owner: old-owner,
+        new-owner: new-owner,
+        block: block-height
+      })
+      
+      (ok new-owner)
+    )
+  )
+)
+
+(define-public (pause)
+  (begin
+    (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+    (asserts! (not (is-paused)) ERR-NOT-AUTHORIZED)
+    
+    (var-set paused true)
+    
+    (print {
+      event: "contract-paused",
+      user: tx-sender,
+      block: block-height
+    })
+    
+    (ok true)
+  )
+)
