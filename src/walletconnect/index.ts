@@ -64,3 +64,4 @@ export function stxToMicroStx(stx: number): string {
 export { walletConnect };
 export * from './config';
 export * from './client';
+export * from './contract';
