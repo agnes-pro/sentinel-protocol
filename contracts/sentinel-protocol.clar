@@ -68,12 +68,12 @@
       (map-set user-operations tx-sender {
         increments: (+ (get increments current-stats) u1),
         decrements: (get decrements current-stats),
-        last-action-block: block-height
+        last-action-block: stacks-block-height
       })
       (map-set user-operations tx-sender {
         increments: (get increments current-stats),
         decrements: (+ (get decrements current-stats) u1),
-        last-action-block: block-height
+        last-action-block: stacks-block-height
       })
     )
   )
@@ -147,7 +147,7 @@
       event: "counter-incremented",
       counter: (var-get counter),
       user: tx-sender,
-      block: block-height
+      block: stacks-block-height
     })
     
     (ok (var-get counter))
@@ -172,7 +172,7 @@
       event: "counter-decremented",
       counter: (var-get counter),
       user: tx-sender,
-      block: block-height
+      block: stacks-block-height
     })
     
     (ok (var-get counter))
@@ -196,7 +196,7 @@
       amount: amount,
       counter: (var-get counter),
       user: tx-sender,
-      block: block-height
+      block: stacks-block-height
     })
     
     (ok (var-get counter))
@@ -220,7 +220,7 @@
       amount: amount,
       counter: (var-get counter),
       user: tx-sender,
-      block: block-height
+      block: stacks-block-height
     })
     
     (ok (var-get counter))
@@ -240,7 +240,7 @@
     (print {
       event: "counter-reset",
       user: tx-sender,
-      block: block-height
+      block: stacks-block-height
     })
     
     (ok (var-get counter))
@@ -260,7 +260,7 @@
         old-value: old-value,
         new-value: new-value,
         user: tx-sender,
-        block: block-height
+        block: stacks-block-height
       })
       
       (ok (var-get counter))
@@ -280,7 +280,7 @@
         event: "ownership-transferred",
         old-owner: old-owner,
         new-owner: new-owner,
-        block: block-height
+        block: stacks-block-height
       })
       
       (ok new-owner)
@@ -298,7 +298,7 @@
     (print {
       event: "contract-paused",
       user: tx-sender,
-      block: block-height
+      block: stacks-block-height
     })
     
     (ok true)
@@ -315,7 +315,7 @@
     (print {
       event: "contract-unpaused",
       user: tx-sender,
-      block: block-height
+      block: stacks-block-height
     })
     
     (ok true)
