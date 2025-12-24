@@ -226,3 +226,44 @@ blic (increment-by (amount uint))
     (ok (var-get counter))
   )
 )
+
+;; =================================
+;; Owner-Only Functions
+;; =================================
+
+(define-public (reset)
+  (begin
+    (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+    
+    (var-set counter u0)
+    
+    (print {
+      event: "counter-reset",
+      user: tx-sender,
+      block: block-height
+    })
+    
+    (ok (var-get counter))
+  )
+)
+
+(define-public (set-value (new-value uint))
+  (begin
+    (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
+    (asserts! (<= new-value MAX-COUNTER-VALUE) ERR-INVALID-VALUE)
+    
+    (let ((old-value (var-get counter)))
+      (var-set counter new-value)
+      
+      (print {
+        event: "counter-set",
+        old-value: old-value,
+        new-value: new-value,
+        user: tx-sender,
+        block: block-height
+      })
+      
+      (ok (var-get counter))
+    )
+  )
+)
