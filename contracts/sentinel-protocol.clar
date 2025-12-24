@@ -178,3 +178,51 @@
     (ok (var-get counter))
   )
 )
+
+blic (increment-by (amount uint))
+  (begin
+    ;; Validations
+    (asserts! (not (is-paused)) ERR-NOT-AUTHORIZED)
+    (asserts! (> amount u0) ERR-INVALID-VALUE)
+    (asserts! (<= (+ (var-get counter) amount) MAX-COUNTER-VALUE) ERR-COUNTER-OVERFLOW)
+    
+    ;; Update counter
+    (var-set counter (+ (var-get counter) amount))
+    (var-set total-increments (+ (var-get total-increments) amount))
+    
+    ;; Emit event
+    (print {
+      event: "counter-incremented-by",
+      amount: amount,
+      counter: (var-get counter),
+      user: tx-sender,
+      block: block-height
+    })
+    
+    (ok (var-get counter))
+  )
+)
+
+(define-public (decrement-by (amount uint))
+  (begin
+    ;; Validations
+    (asserts! (not (is-paused)) ERR-NOT-AUTHORIZED)
+    (asserts! (> amount u0) ERR-INVALID-VALUE)
+    (asserts! (>= (var-get counter) amount) ERR-COUNTER-UNDERFLOW)
+    
+    ;; Update counter
+    (var-set counter (- (var-get counter) amount))
+    (var-set total-decrements (+ (var-get total-decrements) amount))
+    
+    ;; Emit event
+    (print {
+      event: "counter-decremented-by",
+      amount: amount,
+      counter: (var-get counter),
+      user: tx-sender,
+      block: block-height
+    })
+    
+    (ok (var-get counter))
+  )
+)
